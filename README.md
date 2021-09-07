@@ -15,7 +15,9 @@ Then start the server by running
 yarn dev
 ```
 
-You can use your favourite API tool, I recommend POSTMAN for hitting these endpoints.
+The Server starts at address `localhost:4000`
+
+You can use your favourite API testing tool, I recommend POSTMAN for hitting these endpoints.
 
 ### POST `/api/encode`
 
