@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon --config nodemon.json src/app.ts",
-    "test": "yarn run cypress open"
+    "test": "yarn run cypress run --config video=false"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
