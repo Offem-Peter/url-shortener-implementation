@@ -14,7 +14,14 @@ export async function redirectUrl(req: Request, res: Response) {
     return res.sendStatus(404);
   }
 
-  return res.redirect(short.originalUrl);
+  const originalUrl = short.originalUrl;
+
+  //update url visit counter
+  urlModel.findOneAndUpdate( { originalUrl }, 
+    {$inc : {'noOfVisit' : 1}}, 
+    {new: true},()=>{});
+
+  return res.redirect(originalUrl);
 }
 
 export async function encodeUrl(req: Request, res: Response) {
@@ -60,5 +67,11 @@ export async function getUrlStatistic(req: Request, res: Response) {
     return res.sendStatus(404);
   }
 
-  return res.json(short);
+  const stat = {
+    "noOfVisit": short.noOfVisit,
+    "originalUrl": short.originalUrl,
+    "shortUrl": short.shortUrl
+  };
+
+  return res.json(stat);
 }
