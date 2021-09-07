@@ -1,7 +1,12 @@
 
 import { Express, Request, Response } from "express";
 
-import {encodeUrl, decodeUrl, getUrlStatistic} from "../controllers/url.controller";
+import {redirectUrl ,encodeUrl, decodeUrl, getUrlStatistic} from "../controllers/url.controller";
+
+import validateResource from "../middleware/validation";
+import encodeSchema from "../schema/encode.schema";
+import decodeSchema from "../schema/decode.schema";
+
 
 const routes = (app: Express) => {
 
@@ -10,8 +15,9 @@ const routes = (app: Express) => {
         return res.json("Server Running");
     });
 
-    app.post('/api/encode', encodeUrl);
-    app.post('/api/decode', decodeUrl);
+    app.get("/:shortUrl", redirectUrl);
+    app.post('/api/encode', validateResource(encodeSchema), encodeUrl);
+    app.post('/api/decode',validateResource(decodeSchema), decodeUrl);
     app.get('/api/statistic/:shortUrl', getUrlStatistic);
 
 }

@@ -5,6 +5,18 @@ import config from "config";
 
 const HOST = `${config.get("host")}:${config.get("port")}/`; //get host
 
+export async function redirectUrl(req: Request, res: Response) {
+  const { shortUrl } = req.params;
+
+  const short = await urlModel.findOne({ shortUrl }).lean();
+
+  if (!short) {
+    return res.sendStatus(404);
+  }
+
+  return res.redirect(short.originalUrl);
+}
+
 export async function encodeUrl(req: Request, res: Response) {
   
   // Get the destination from the request body
